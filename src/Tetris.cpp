@@ -110,17 +110,30 @@ void draw(){
         for (int j = 0 ; j < W ; j++) cout<<board[i][j];
 }
 void removeLine(){
-    int i,j;
-    for (i = H-2 ; i > 0 ; i-- ){
-        for (j = 0 ; j < W ; j++)
-            if (board[i][j] == ' ') break;
-        if (j == W){
-            for (int ii = i ; ii > 0 ; ii--)
-                for (int jj = 0; jj < W; jj++)
-                    board[ii][jj] = board[ii-1][jj];
+    for (int i = H - 2; i >= 1; i--) {
+        bool full = true;
+
+        // Kiem tra hang da day
+        for (int j = 1; j < W - 1; j++) {
+            if (board[i][j] == ' ') {
+                full = false;
+                break;
+            }
+        }
+        if (full) {
+            // Dich cac hang phia tren xuong
+            for (int row = i; row > 1; row--) {
+                for (int col = 1; co < W - 1; col++) {
+                    board[row][col] = board[row - 1][col]
+                }
+            }
+            
+            // Xoa hang tren cung
+            for (int col = 1; col < W - 1; col++) {
+                board[1][col] = ' ';
+            }
+            
             i++;
-            draw();
-            _sleep(200);
         }
     }
 }
