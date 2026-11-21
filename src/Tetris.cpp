@@ -123,8 +123,8 @@ void removeLine(){
         if (full) {
             // Dich cac hang phia tren xuong
             for (int row = i; row > 1; row--) {
-                for (int col = 1; co < W - 1; col++) {
-                    board[row][col] = board[row - 1][col]
+                for (int col = 1; col < W - 1; col++) {
+                    board[row][col] = board[row - 1][col];
                 }
             }
             
