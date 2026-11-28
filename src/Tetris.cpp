@@ -96,6 +96,15 @@ void boardDelBlock(){
             if (blocks[b][i][j] != ' ')
                 board[y+i][x+j] = ' ';
 }
+void xoayBlock(){
+    char tam[4][4];
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            tam[j][3 - i] = blocks[b][i][j];
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            blocks[b][i][j] = tam[i][j];
+}
 void initBoard(){
     for (int i = 0 ; i < H ; i++)
         for (int j = 0 ; j < W ; j++)
@@ -141,6 +150,7 @@ void removeLine(){
 int main()
 {
     srand(time(0));
+    int soLanXoay = 0;
     x = 5; y = 0; b = rand()%7;
     initBoard();
     while (1){
@@ -150,11 +160,26 @@ int main()
             if (c == 'a' && canMove(-1,0)) x--;
             if (c == 'd' && canMove( 1,0)) x++;
             if (c == 'x' && canMove( 0,1)) y++;
+            if (c == 'w') {
+                xoayBlock();
+                soLanXoay++;
+                if (!canMove(0,0)) {
+                    // khong xoay duoc thi xoay them 3 lan de ve lai nhu cu
+                    xoayBlock(); xoayBlock(); xoayBlock();
+                    soLanXoay--;
+                }
+            }
             if (c == 'q') break;
         }
         if (canMove(0,1)) y++;
         else{
             block2Board();
+            // xoay cho du 4 lan de khoi tro ve huong ban dau
+            while (soLanXoay % 4 != 0) {
+                xoayBlock();
+                soLanXoay++;
+            }
+            soLanXoay = 0;
             removeLine();
             x = 5; y = 0; b = rand()%7;
         }
